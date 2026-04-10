@@ -1,7 +1,6 @@
 import datetime
 from sqlalchemy import create_engine
 import pandas as pd
-from upload_to_db import VendorsIngestion
 
 database = 'business_inteligence'
 mysql_user = 'forge'
@@ -89,7 +88,14 @@ dx = pd.concat(list_dfs, ignore_index=True)
 df = dx.copy()
 df['credenciados'] = df.credenciados.astype(int)
 
-df.to_csv(f'bases/aux_2026_overview_visitation_by_date_{dtoday}.csv', index=False, encoding='utf-8', sep='|')
+database = 'bi_aux'
+mysql_user = 'forge'
+mysql_password = 'tEDI2JItzUdhUc6dW2GI'
+mysql_host = '195.35.17.83'
+connection_string = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}/{database}'
+# Create a SQLAlchemy engine
+engine = create_engine(connection_string)
 
-v = VendorsIngestion()
-v.send_vendors_to_raw()
+# Upload the DataFrame to MySQL
+table_name = '2026_overview_visitation_by_date'  # Replace with your desired table name
+df.to_sql(name=table_name, con=engine, if_exists='replace', index=False)
