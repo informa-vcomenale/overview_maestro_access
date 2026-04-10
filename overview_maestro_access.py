@@ -1,10 +1,16 @@
 import datetime
 from sqlalchemy import create_engine
 import pandas as pd
+import os
+import json
+
+abs_path = os.path.dirname(os.path.realpath(__file__))
+fp = open(abs_path + "\\data_access.json", encoding='utf-8', mode='r')
+data_acc = json.load(fp)
 
 database = 'business_inteligence'
-mysql_user = 'forge'
-mysql_password = 'tEDI2JItzUdhUc6dW2GI'
+mysql_user = data_acc['user']
+mysql_password = data_acc['password']
 mysql_host = '195.35.17.83'
 connection_string = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}/{database}'
 engine = create_engine(connection_string, echo=True)
@@ -89,9 +95,6 @@ df = dx.copy()
 df['credenciados'] = df.credenciados.astype(int)
 
 database = 'bi_aux'
-mysql_user = 'forge'
-mysql_password = 'tEDI2JItzUdhUc6dW2GI'
-mysql_host = '195.35.17.83'
 connection_string = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}/{database}'
 # Create a SQLAlchemy engine
 engine = create_engine(connection_string)
