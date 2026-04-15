@@ -5,7 +5,7 @@ import os
 import json
 
 abs_path = os.path.dirname(os.path.realpath(__file__))
-fp = open(abs_path + "\\data_access.json", encoding='utf-8', mode='r')
+fp = open(abs_path + "\\mysql_access.json", encoding='utf-8', mode='r')
 data_acc = json.load(fp)
 
 database = 'business_inteligence'
