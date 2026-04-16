@@ -93,6 +93,7 @@ dx = pd.concat(list_dfs, ignore_index=True)
 
 df = dx.copy()
 df['credenciados'] = df.credenciados.astype(int)
+df['inserted_at'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 database = 'bi_aux'
 connection_string = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}/{database}'
